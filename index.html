@@ -26,7 +26,7 @@
   <script>
   async function testXSS() {
     const text = document.getElementById('xss-input').value;
-    const res = await fetch('http://localhost:8501/predict/xss', {
+    const res = await fetch('https://nirportfolio.duckdns.org/predict/xss', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@
 
   async function testSQLi() {
     const text = document.getElementById('sqli-input').value;
-    const res = await fetch('http://localhost:8502/predict/sqli', {
+    const res = await fetch('https://nirportfolio.duckdns.org/predict/sqli', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
