@@ -3,7 +3,8 @@ import clsx from "clsx"; // Optional, for easier class toggling. If you don't us
 
 const XSS_URL = "https://nirportfolio.duckdns.org/predict/xss";
 const SQLI_URL = "https://nirportfolio.duckdns.org/predict/sqli";
-const THRESHOLD = 0.5;
+const THRESHOLD_XSS = 0.05;
+const THRESHOLD_SQL = 0.5;
 
 export default function WafDemo() {
     // XSS state
@@ -45,8 +46,9 @@ export default function WafDemo() {
                 body: JSON.stringify({ text: xssInput }),
             });
             const data = await res.json();
+            const pred = data?.prediction?.[0]?.[0];
             setXssResult(data);
-            if (typeof data.prediction === "number" && data.prediction > THRESHOLD) {
+            if (typeof pred === "number" && pred > THRESHOLD_XSS) {
                 setXssStatus("attack");
             } else {
                 setXssStatus("safe");
@@ -79,8 +81,9 @@ export default function WafDemo() {
                 body: JSON.stringify({ text: sqliInput }),
             });
             const data = await res.json();
+            const pred = data?.prediction?.[0]?.[0];
             setSqliResult(data);
-            if (typeof data.prediction === "number" && data.prediction > THRESHOLD) {
+            if (typeof pred === "number" && pred > THRESHOLD_SQL) {
                 setSqliStatus("attack");
             } else {
                 setSqliStatus("safe");
@@ -164,11 +167,6 @@ export default function WafDemo() {
                         Error: Could not contact server
                     </div>
                 )}
-                {xssResult && (
-                    <pre className="mt-2 text-xs text-neutral-500 dark:text-neutral-300 font-mono bg-neutral-100 dark:bg-neutral-900 rounded p-2">
-                        {JSON.stringify(xssResult, null, 2)}
-                    </pre>
-                )}
             </form>
 
             {/* SQLi Section */}
@@ -239,11 +237,7 @@ export default function WafDemo() {
                         Error: Could not contact server
                     </div>
                 )}
-                {sqliResult && (
-                    <pre className="mt-2 text-xs text-neutral-500 dark:text-neutral-300 font-mono bg-neutral-100 dark:bg-neutral-900 rounded p-2">
-                        {JSON.stringify(sqliResult, null, 2)}
-                    </pre>
-                )}
+                
             </form>
         </div>
     );
