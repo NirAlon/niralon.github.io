@@ -10,7 +10,11 @@ export default function ResumeChatBotDemo() {
     const API_URL = "https://nirportfolio.duckdns.org/chat";
 
     useEffect(() => {
-        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        chatEndRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "nearest"
+        });
     }, [messages]);
 
     async function handleSend(e) {
@@ -39,14 +43,18 @@ export default function ResumeChatBotDemo() {
             ]);
         }
     }
-
+    const chatContainerRef = useRef(null);
     return (
         <div className="w-full max-w-lg mx-auto bg-neutral-50 dark:bg-neutral-900 rounded-2xl shadow p-6 flex flex-col gap-4">
             <div className="flex items-center gap-2 mb-3">
                 <span className="inline-block text-2xl">🤖</span>
                 <span className="font-mono font-bold text-purple-700 dark:text-cyan-200 text-lg">Resume ChatBot</span>
             </div>
-            <div className="flex-1 h-64 overflow-y-auto bg-neutral-100 dark:bg-neutral-800 rounded-lg p-3 mb-2">
+            <div
+                ref={chatContainerRef}
+                className="h-80 bg-neutral-100 dark:bg-neutral-800 rounded-lg p-3 mb-2 overflow-y-auto"
+                style={{ overscrollBehavior: "contain" }}
+            >
                 {messages.map((msg, idx) => (
                     <div
                         key={idx}
@@ -83,4 +91,5 @@ export default function ResumeChatBotDemo() {
             </form>
         </div>
     );
+
 }

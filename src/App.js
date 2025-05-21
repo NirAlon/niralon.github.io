@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link as ScrollLink, Element, Events } from "react-scroll";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { Mail, Github, Linkedin } from "lucide-react";
 
 import Home from "./components/Home";
 import Projects from "./components/Projects"
@@ -118,11 +119,11 @@ function App() {
           <div className="font-bold text-purple-700 dark:text-purple-400 text-2xl font-mono">Nir Alon</div>
           <div className="text-neutral-500 dark:text-neutral-400 text-base font-mono">Softwar Engineer</div>
           <div className="text-neutral-400 dark:text-neutral-500 text-sm font-mono flex items-center justify-center mt-2">
-    <svg /* location icon here, optional */ className="w-4 h-4 mr-1 inline-block" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M10 2a6 6 0 016 6c0 4-6 10-6 10S4 12 4 8a6 6 0 016-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/>
-    </svg>
-    United States
-  </div>
+            <svg className="w-4 h-4 mr-1 inline-block" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a6 6 0 016 6c0 4-6 10-6 10S4 12 4 8a6 6 0 016-6zm0 8a2 2 0 110-4 2 2 0 010 4z" />
+            </svg>
+            United States
+          </div>
         </div>
         {SECTIONS.map(({ id, label }) => (
           <ScrollLink
@@ -149,23 +150,37 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="flex gap-4 mt-4"
+              className="flex gap-2 mt-4"
             >
+              <a
+                href="mailto:niralon99@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full border border-blue-400 dark:border-cyan-300 text-blue-700 dark:text-cyan-200 hover:bg-blue-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
+                aria-label="Email"
+                title="Email"
+              >
+                <Mail className="w-5 h-5" />
+              </a>
               <a
                 href="https://github.com/NirAlon"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 py-2 rounded-full border border-purple-500 dark:border-cyan-300 text-purple-700 dark:text-cyan-200 font-mono font-medium hover:bg-purple-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
+                className="p-2 rounded-full border border-purple-500 dark:border-cyan-300 text-purple-700 dark:text-cyan-200 hover:bg-purple-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
+                aria-label="GitHub"
+                title="GitHub"
               >
-                GitHub
+                <Github />
               </a>
               <a
                 href="https://www.linkedin.com/in/niralonse"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 py-2 rounded-full border border-pink-400 dark:border-cyan-300 text-pink-700 dark:text-cyan-200 font-mono font-medium hover:bg-pink-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
+                className="p-2 rounded-full border border-pink-400 dark:border-cyan-300 text-pink-700 dark:text-cyan-200 hover:bg-pink-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
+                aria-label="LinkedIn"
+                title="LinkedIn"
               >
-                LinkedIn
+                <Linkedin />
               </a>
             </motion.div>
           )}

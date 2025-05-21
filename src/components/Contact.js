@@ -17,18 +17,8 @@ export default function Contact() {
     <section className="flex flex-col items-center gap-4 text-center py-32 min-h-[60vh]">
       <div className="flex items-center justify-center w-full mb-2">
         <h1 className="text-4xl md:text-5xl font-extrabold text-neutral-900 dark:text-cyan-200 font-mono text-center">
-          Book a Meeting with Me!
+          Let’s make time to talk!
         </h1>
-        <span
-          role="img"
-          aria-label="calendar"
-          className="inline-block text-5xl ml-4 animate-wave"
-          style={{
-            transformOrigin: "70% 70%",
-          }}
-        >
-          📅
-        </span>
       </div>
       <div className="w-full max-w-3xl mx-auto rounded-2xl p-[2px] bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 shadow-xl">
         <div className="rounded-2xl bg-neutral-100 dark:bg-neutral-800 p-10 flex flex-col items-center">

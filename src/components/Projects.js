@@ -1,5 +1,5 @@
 import ComputerIcon from "./ComputerIcon";
-import { useState} from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import WafDemo from "./WafDemo";
@@ -23,8 +23,7 @@ const TAG_COLORS = {
   "React": "bg-cyan-900 text-cyan-200",
   "API": "bg-cyan-900 text-cyan-200",
   "GO": "bg-yellow-800 text-yellow-200",
-  "React": "bg-pink-900 text-pink-200",
-  "Gin&Gonic":"bg-cyan-900 text-cyan-200",
+  "Gin&Gonic": "bg-cyan-900 text-cyan-200",
   "Chatbot": "bg-purple-800 text-purple-200",
   "NLP": "bg-purple-800 text-purple-200",
   "OpenAI": "bg-purple-800 text-purple-200",
@@ -84,8 +83,8 @@ const projects = [
       "Showcases expertise in NLP, AI deployment, and full-stack integration—demonstrating technical and product skills to prospective employers.",
       "Reusable framework can be white-labeled for other professionals, offering a unique personal branding tool."
     ],
-    live: "", // Add if you deploy a live demo, e.g., "/resume-bot"
-    source: "https://github.com/NirAlon/ResumeChatBot", // Placeholder; use your real repo link
+    live: "/",
+    source: "https://github.com/NirAlon/ResumeChatBot",
     tags: [
       "React",
       "GO",
@@ -162,7 +161,11 @@ export default function Projects() {
                 }}
                 className="px-5 py-2 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 text-white font-mono font-medium hover:from-cyan-500 hover:to-pink-500 transition shadow"
               >
-                {openDemos[i] ? "Hide Demo" : "Live Demo"}
+                {
+                  openDemos[i]
+                    ? (project.title === "Resume Q&A Chatbot" ? "Hide Chat" : "Hide Demo")
+                    : (project.title === "Resume Q&A Chatbot" ? "Start Chat" : "Live Demo")
+                }
               </button>
               <a
                 href={project.source}

@@ -4,18 +4,16 @@ import clsx from "clsx"; // Optional, for easier class toggling. If you don't us
 const XSS_URL = "https://nirportfolio.duckdns.org/predict/xss";
 const SQLI_URL = "https://nirportfolio.duckdns.org/predict/sqli";
 const THRESHOLD_XSS = 0.05;
-const THRESHOLD_SQL = 0.98;
+const THRESHOLD_SQL = 0.978;
 
 export default function WafDemo() {
     // XSS state
     const [xssInput, setXssInput] = useState("");
-    const [xssResult, setXssResult] = useState(null);
     const [xssStatus, setXssStatus] = useState(""); // "attack" | "safe" | ""
     const [xssLoading, setXssLoading] = useState(false);
 
     // SQLi state
     const [sqliInput, setSqliInput] = useState("");
-    const [sqliResult, setSqliResult] = useState(null);
     const [sqliStatus, setSqliStatus] = useState("");
     const [sqliLoading, setSqliLoading] = useState(false);
 
@@ -25,7 +23,6 @@ export default function WafDemo() {
     useEffect(() => {
         if (!showXssInfo) return;
         function handleClick(e) {
-            // If click is outside the popup and the button, close it
             if (xssInfoRef.current && !xssInfoRef.current.contains(e.target)) {
                 setShowXssInfo(false);
             }
@@ -38,7 +35,6 @@ export default function WafDemo() {
         e.preventDefault();
         setXssLoading(true);
         setXssStatus("");
-        setXssResult(null);
         try {
             const res = await fetch(XSS_URL, {
                 method: "POST",
@@ -47,7 +43,6 @@ export default function WafDemo() {
             });
             const data = await res.json();
             const pred = data?.prediction?.[0]?.[0];
-            setXssResult(data);
             if (typeof pred === "number" && pred > THRESHOLD_XSS) {
                 setXssStatus("attack");
             } else {
@@ -65,7 +60,6 @@ export default function WafDemo() {
     useEffect(() => {
         if (!showSqliInfo) return;
         function handleClick(e) {
-            // If click is outside the popup and the button, close it
             if (sqliInfoRef.current && !sqliInfoRef.current.contains(e.target)) {
                 setShowSqliInfo(false);
             }
@@ -78,7 +72,6 @@ export default function WafDemo() {
         e.preventDefault();
         setSqliLoading(true);
         setSqliStatus("");
-        setSqliResult(null);
         try {
             const res = await fetch(SQLI_URL, {
                 method: "POST",
@@ -87,7 +80,6 @@ export default function WafDemo() {
             });
             const data = await res.json();
             const pred = data?.prediction?.[0]?.[0];
-            setSqliResult(data);
             if (typeof pred === "number" && pred > THRESHOLD_SQL) {
                 setSqliStatus("attack");
             } else {
@@ -100,7 +92,7 @@ export default function WafDemo() {
     }
 
     // Animation classes
-    const shakeClass = "animate-shake"; // You need to add this animation to tailwind.config.js (see below)
+    const shakeClass = "animate-shake";
     const glowClass = "ring-2 ring-green-400 shadow-green-400/50";
 
     return (
@@ -196,7 +188,7 @@ export default function WafDemo() {
                             <div className="font-semibold mb-1">SQL Injection Detection Info</div>
                             <ul className="list-disc pl-4">
                                 <li><strong>What:</strong> This test sends your input to an AI model that predicts if it contains a SQL Injection (SQLi) attack.</li>
-                                <li><strong>Example input:</strong> <code>' OR 1=1 --</code></li>
+                                <li><strong>Example input:</strong> <code>SELECT * FROM users WHERE id=1 OR 1=1 --</code></li>
                                 <li><strong>Result:</strong> If a real SQL injection went through, an attacker could access or manipulate sensitive database data—potentially dumping tables, bypassing authentication, or deleting records.</li>
                             </ul>
                         </div>
