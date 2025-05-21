@@ -4,7 +4,7 @@ import clsx from "clsx"; // Optional, for easier class toggling. If you don't us
 const XSS_URL = "https://nirportfolio.duckdns.org/predict/xss";
 const SQLI_URL = "https://nirportfolio.duckdns.org/predict/sqli";
 const THRESHOLD_XSS = 0.05;
-const THRESHOLD_SQL = 0.5;
+const THRESHOLD_SQL = 0.98;
 
 export default function WafDemo() {
     // XSS state

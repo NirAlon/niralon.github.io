@@ -1,7 +1,9 @@
 import ComputerIcon from "./ComputerIcon";
-import { useState } from "react";
+import { useState} from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
 import WafDemo from "./WafDemo";
+import ResumeChatBotDemo from "./ResumeChatBotDemo";
 
 const TAG_COLORS = {
   "Machine Learning": "bg-purple-800 text-purple-200",
@@ -19,7 +21,14 @@ const TAG_COLORS = {
   "Caddy": "bg-cyan-900 text-cyan-200",
   "Pipelines": "bg-cyan-900 text-cyan-200",
   "React": "bg-cyan-900 text-cyan-200",
-  "API": "bg-cyan-900 text-cyan-200"
+  "API": "bg-cyan-900 text-cyan-200",
+  "GO": "bg-yellow-800 text-yellow-200",
+  "React": "bg-pink-900 text-pink-200",
+  "Gin&Gonic":"bg-cyan-900 text-cyan-200",
+  "Chatbot": "bg-purple-800 text-purple-200",
+  "NLP": "bg-purple-800 text-purple-200",
+  "OpenAI": "bg-purple-800 text-purple-200",
+  "LangChain": "bg-yellow-800 text-yellow-200"
 };
 
 const projects = [
@@ -61,13 +70,40 @@ const projects = [
       "API"
     ],
   },
-  // Add more projects as needed!
+  {
+    title: "Resume Q&A Chatbot",
+    description:
+      "Built a conversational AI assistant trained on my resume, work experience, and skills. The chatbot answers questions from recruiters and visitors about my background, key projects, and expertise. This interactive tool provides an engaging, modern way to learn about my professional profile—going beyond the limitations of a static CV.",
+    integration: [
+      "Integrated directly into my portfolio as an interactive chat widget, offering real-time answers to questions about my experience and skills.",
+      "Flexible backend design enables retraining or customization for any resume or dataset, making it suitable for other professionals or internal HR teams.",
+      "REST API available for easy embedding in other platforms or career pages."
+    ],
+    businessValue: [
+      "Delivers instant, conversational access to my qualifications, increasing engagement and reducing barriers for recruiters.",
+      "Showcases expertise in NLP, AI deployment, and full-stack integration—demonstrating technical and product skills to prospective employers.",
+      "Reusable framework can be white-labeled for other professionals, offering a unique personal branding tool."
+    ],
+    live: "", // Add if you deploy a live demo, e.g., "/resume-bot"
+    source: "https://github.com/NirAlon/ResumeChatBot", // Placeholder; use your real repo link
+    tags: [
+      "React",
+      "GO",
+      "Gin&Gonic",
+      "Chatbot",
+      "NLP",
+      "OpenAI",
+      "LangChain",
+      "API"
+    ],
+  }
 ];
 
 
 
 export default function Projects() {
-  const [showDemo, setShowDemo] = useState(false);
+  const [openDemos, setOpenDemos] = useState(Array(projects.length).fill(false));
+
 
   return (
     <section className="flex flex-col items-center gap-4 py-32 min-h-[60vh]">
@@ -119,11 +155,14 @@ export default function Projects() {
 
             <div className="flex gap-4 mt-3">
               <button
-                onClick={() => setShowDemo((prev) => !prev)}
-                className="px-5 py-2 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500
-                  text-white font-mono font-medium hover:from-cyan-500 hover:to-pink-500 transition shadow"
+                onClick={() => {
+                  setOpenDemos((prev) =>
+                    prev.map((open, idx) => (idx === i ? !open : open))
+                  );
+                }}
+                className="px-5 py-2 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 text-white font-mono font-medium hover:from-cyan-500 hover:to-pink-500 transition shadow"
               >
-                {showDemo ? "Hide Demo" : "Live Demo"}
+                {openDemos[i] ? "Hide Demo" : "Live Demo"}
               </button>
               <a
                 href={project.source}
@@ -136,15 +175,19 @@ export default function Projects() {
             </div>
             {/* Slide Down Demo Fields */}
             <AnimatePresence>
-              {showDemo && (
+              {openDemos[i] && (
                 <motion.div
                   initial={{ height: 0, opacity: 0, y: -30 }}
                   animate={{ height: "auto", opacity: 1, y: 0 }}
                   exit={{ height: 0, opacity: 0, y: -30 }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className=" mt-4"
+                  className="mt-4"
                 >
-                  <WafDemo />
+                  {project.title === "Resume Q&A Chatbot" ? (
+                    <ResumeChatBotDemo />
+                  ) : (
+                    <WafDemo />
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
