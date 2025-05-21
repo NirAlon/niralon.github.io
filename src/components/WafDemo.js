@@ -20,13 +20,13 @@ export default function WafDemo() {
     const [sqliLoading, setSqliLoading] = useState(false);
 
     const [showXssInfo, setShowXssInfo] = useState(false);
-    const infoRef = useRef();
+    const xssInfoRef = useRef();
 
     useEffect(() => {
         if (!showXssInfo) return;
         function handleClick(e) {
             // If click is outside the popup and the button, close it
-            if (infoRef.current && !infoRef.current.contains(e.target)) {
+            if (xssInfoRef.current && !xssInfoRef.current.contains(e.target)) {
                 setShowXssInfo(false);
             }
         }
@@ -64,9 +64,14 @@ export default function WafDemo() {
 
     useEffect(() => {
         if (!showSqliInfo) return;
-        const handler = () => setShowSqliInfo(false);
-        document.addEventListener("mousedown", handler);
-        return () => document.removeEventListener("mousedown", handler);
+        function handleClick(e) {
+            // If click is outside the popup and the button, close it
+            if (sqliInfoRef.current && !sqliInfoRef.current.contains(e.target)) {
+                setShowSqliInfo(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClick);
+        return () => document.removeEventListener("mousedown", handleClick);
     }, [showSqliInfo]);
 
     async function handleTestSQLi(e) {
@@ -117,7 +122,7 @@ export default function WafDemo() {
                     </button>
                     {showXssInfo && (
                         <div
-                            ref={infoRef}
+                            ref={xssInfoRef}
                             className="absolute left-full top-0 z-20 bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 shadow-lg rounded p-4 w-96 text-xs text-neutral-700 dark:text-neutral-200"
                         >
                             <div className="font-semibold mb-1">XSS Detection Info</div>
