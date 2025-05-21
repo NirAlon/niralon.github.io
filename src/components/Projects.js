@@ -28,7 +28,7 @@ const projects = [
     description:
       "A web demo interfacing with a trained Oracle server to classify requests for XSS/SQLi vulnerabilities.",
     live: "/",
-    source: "https://github.com/NirAlon/niralon.github.io",
+    source: "https://github.com/NirAlon/WafProject",
     tags: [
       "Machine Learning",
       "TensorFlow Lite",
