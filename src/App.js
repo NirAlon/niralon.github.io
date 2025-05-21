@@ -117,6 +117,12 @@ function App() {
         <div className="mb-8 text-center">
           <div className="font-bold text-purple-700 dark:text-purple-400 text-2xl font-mono">Nir Alon</div>
           <div className="text-neutral-500 dark:text-neutral-400 text-base font-mono">Softwar Engineer</div>
+          <div className="text-neutral-400 dark:text-neutral-500 text-sm font-mono flex items-center justify-center mt-2">
+    <svg /* location icon here, optional */ className="w-4 h-4 mr-1 inline-block" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M10 2a6 6 0 016 6c0 4-6 10-6 10S4 12 4 8a6 6 0 016-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/>
+    </svg>
+    United States
+  </div>
         </div>
         {SECTIONS.map(({ id, label }) => (
           <ScrollLink
