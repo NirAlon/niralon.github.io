@@ -24,9 +24,22 @@ const TAG_COLORS = {
 
 const projects = [
   {
-    title: "Web Application Firewall",
+    title: "Web Application Firewall (WAF)",
     description:
-      "A web demo interfacing with a trained Oracle server to classify requests for XSS/SQLi vulnerabilities.",
+      "Designed and implemented a modular, machine learning-driven Web Application Firewall (WAF) to provide robust, automated protection against web application threats—including XSS and SQL injection—across client-facing services. The solution is architected as a containerized microservice, deployable via Docker Compose, with an API-first approach for seamless integration into diverse client infrastructures.",
+    integration: [
+      "Deployed as a transparent middleware between frontend and backend, inspecting all inbound traffic in real time.",
+      "Easy integration via REST/gRPC APIs, requiring minimal changes to client codebases.",
+      "Microservice design enables independent scaling, logging, and flexible security policy configuration per client or endpoint.",
+      "Adaptable to diverse business requirements and regulatory needs."
+    ],
+    businessValue: [
+      "Automatically detects and mitigates OWASP Top 10 threats (XSS, SQLi), reducing security risk and liability.",
+      "Adaptive, ML-powered detection minimizes operational overhead and frees up security/DevOps resources.",
+      "Rapid, API-driven integration accelerates client onboarding and rollout.",
+      "Centralized logging and analytics provide actionable insights for compliance and continuous improvement.",
+      "Enhances customer trust with transparent, automated protection."
+    ],
     live: "/",
     source: "https://github.com/NirAlon/WafProject",
     tags: [
@@ -50,6 +63,8 @@ const projects = [
   },
   // Add more projects as needed!
 ];
+
+
 
 export default function Projects() {
   const [showDemo, setShowDemo] = useState(false);
@@ -84,6 +99,24 @@ export default function Projects() {
             <p className="text-neutral-700 dark:text-neutral-100 font-mono">
               {project.description}
             </p>
+
+            <div className="mt-2">
+              <span className="font-semibold text-purple-700 dark:text-purple-400">Integration With Client Services:</span>
+              <ul className="list-disc ml-6 mt-1 text-neutral-700 dark:text-neutral-100 font-mono">
+                {project.integration.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-2">
+              <span className="font-semibold text-purple-700 dark:text-purple-400">Business Value:</span>
+              <ul className="list-disc ml-6 mt-1 text-neutral-700 dark:text-neutral-100 font-mono">
+                {project.businessValue.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
             <div className="flex gap-4 mt-3">
               <button
                 onClick={() => setShowDemo((prev) => !prev)}
