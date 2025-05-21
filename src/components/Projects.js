@@ -77,7 +77,7 @@ export default function Projects() {
         </h1>
         <ComputerIcon className="w-12 h-12 md:w-16 md:h-16" />
       </div>
-      <div className="flex flex-col gap-12 w-full max-w-3xl">
+      <div className="w-full max-w-3xl mx-auto rounded-2xl p-[2px] bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 shadow-xl">
         {projects.map((project, i) => (
           <div
             key={project.title}

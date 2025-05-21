@@ -1,35 +1,57 @@
+import { InlineWidget } from "react-calendly";
+import { useEffect, useState } from "react";
+
+
 export default function Contact() {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    // Check if the user's OS/browser prefers dark mode
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateDark = () => setIsDark(media.matches);
+    updateDark();
+    media.addEventListener("change", updateDark);
+    return () => media.removeEventListener("change", updateDark);
+  }, []);
   return (
     <section className="flex flex-col items-center gap-4 text-center py-32 min-h-[60vh]">
-      <h2 className="text-3xl font-bold text-purple-700 dark:text-cyan-200 mb-2 font-mono">Contact</h2>
-      <p className="text-lg text-neutral-700 dark:text-neutral-200 font-mono mb-2">
-        Let’s connect!
-      </p>
-      <a
-        href="mailto:niralon@gmail.com"
-        className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500
-          text-white font-mono font-semibold text-lg shadow hover:from-cyan-500 hover:to-pink-500 transition"
-      >
-        Email Me
-      </a>
-      <div className="flex gap-4 mt-4">
-        <a
-          href="https://github.com/NirAlon"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-5 py-2 rounded-full border border-purple-500 dark:border-cyan-300 text-purple-700 dark:text-cyan-200 font-mono font-medium hover:bg-purple-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
+      <div className="flex items-center justify-center w-full mb-2">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-neutral-900 dark:text-cyan-200 font-mono text-center">
+          Book a Meeting with Me!
+        </h1>
+        <span
+          role="img"
+          aria-label="calendar"
+          className="inline-block text-5xl ml-4 animate-wave"
+          style={{
+            transformOrigin: "70% 70%",
+          }}
         >
-          GitHub
-        </a>
-        {/* Add more links here */}
-        <a
-          href="https://www.linkedin.com/in/niralonse"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-5 py-2 rounded-full border border-pink-400 dark:border-cyan-300 text-pink-700 dark:text-cyan-200 font-mono font-medium hover:bg-pink-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
-        >
-          LinkedIn
-        </a>
+          📅
+        </span>
+      </div>
+      <div className="w-full max-w-3xl mx-auto rounded-2xl p-[2px] bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 shadow-xl">
+        <div className="rounded-2xl bg-neutral-100 dark:bg-neutral-800 p-10 flex flex-col items-center">
+          <InlineWidget
+            url="https://calendly.com/niralon99/30min"
+            styles={{ height: "700px", width: "100%", minWidth: "320px" }}
+            pageSettings={
+              isDark
+              ?{
+                backgroundColor: "#262626", // Tailwind dark: bg-neutral-800
+                primaryColor: "06b6d4", // cyan-400
+                textColor: "#F3F4F4", // near-neutral-100
+              }
+              :{
+                    backgroundColor: "#F5F5F5", // Tailwind bg-neutral-100
+                    primaryColor: "7c3aed", // purple-600
+                    textColor: "#262626", // neutral-800
+              }
+            
+            
+            }
+          />
+        </div>
       </div>
     </section>
   );

@@ -135,6 +135,36 @@ function App() {
             {label}
           </ScrollLink>
         ))}
+        <AnimatePresence>
+          {active === "contact" && (
+            <motion.div
+              key="contact-buttons"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="flex gap-4 mt-4"
+            >
+              <a
+                href="https://github.com/NirAlon"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2 rounded-full border border-purple-500 dark:border-cyan-300 text-purple-700 dark:text-cyan-200 font-mono font-medium hover:bg-purple-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
+              >
+                GitHub
+              </a>
+              <a
+                href="https://www.linkedin.com/in/niralonse"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2 rounded-full border border-pink-400 dark:border-cyan-300 text-pink-700 dark:text-cyan-200 font-mono font-medium hover:bg-pink-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
+              >
+                LinkedIn
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
       </nav>
 
       {/* Page Content */}
@@ -152,7 +182,7 @@ function App() {
         </Element>
 
 
-        <Element name="contact" id="contact" className="w-full max-w-3xl mb-12">
+        <Element name="contact" id="contact" className="w-full max-w-3xl">
           <AnimatedSection id="contact">
             <Contact />
           </AnimatedSection>
