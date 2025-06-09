@@ -1,6 +1,4 @@
 import ComputerIcon from "./ComputerIcon";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 import WafDemo from "./WafDemo";
 import ResumeChatBotDemo from "./ResumeChatBotDemo";
@@ -35,19 +33,6 @@ const projects = [
     title: "Web Application Firewall (WAF)",
     description:
       "Designed and implemented a modular, machine learning-driven Web Application Firewall (WAF) to provide robust, automated protection against web application threats—including XSS and SQL injection—across client-facing services. The solution is architected as a containerized microservice, deployable via Docker Compose, with an API-first approach for seamless integration into diverse client infrastructures.",
-    integration: [
-      "Deployed as a transparent middleware between frontend and backend, inspecting all inbound traffic in real time.",
-      "Easy integration via REST/gRPC APIs, requiring minimal changes to client codebases.",
-      "Microservice design enables independent scaling, logging, and flexible security policy configuration per client or endpoint.",
-      "Adaptable to diverse business requirements and regulatory needs."
-    ],
-    businessValue: [
-      "Automatically detects and mitigates OWASP Top 10 threats (XSS, SQLi), reducing security risk and liability.",
-      "Adaptive, ML-powered detection minimizes operational overhead and frees up security/DevOps resources.",
-      "Rapid, API-driven integration accelerates client onboarding and rollout.",
-      "Centralized logging and analytics provide actionable insights for compliance and continuous improvement.",
-      "Enhances customer trust with transparent, automated protection."
-    ],
     live: "/",
     source: "https://github.com/NirAlon/WafProject",
     tags: [
@@ -68,21 +53,12 @@ const projects = [
       "React",
       "API"
     ],
+    demo: WafDemo
   },
   {
     title: "Resume Q&A Chatbot",
     description:
       "Built a conversational AI assistant trained on my resume, work experience, and skills. The chatbot answers questions from recruiters and visitors about my background, key projects, and expertise. This interactive tool provides an engaging, modern way to learn about my professional profile—going beyond the limitations of a static CV.",
-    integration: [
-      "Integrated directly into my portfolio as an interactive chat widget, offering real-time answers to questions about my experience and skills.",
-      "Flexible backend design enables retraining or customization for any resume or dataset, making it suitable for other professionals or internal HR teams.",
-      "REST API available for easy embedding in other platforms or career pages."
-    ],
-    businessValue: [
-      "Delivers instant, conversational access to my qualifications, increasing engagement and reducing barriers for recruiters.",
-      "Showcases expertise in NLP, AI deployment, and full-stack integration—demonstrating technical and product skills to prospective employers.",
-      "Reusable framework can be white-labeled for other professionals, offering a unique personal branding tool."
-    ],
     live: "/",
     source: "https://github.com/NirAlon/ResumeChatBot",
     tags: [
@@ -95,14 +71,13 @@ const projects = [
       "LangChain",
       "API"
     ],
+    demo: ResumeChatBotDemo
   }
 ];
 
 
 
 export default function Projects() {
-  const [openDemos, setOpenDemos] = useState(Array(projects.length).fill(false));
-
 
   return (
     <section className="flex flex-col items-center gap-4 py-32 min-h-[60vh]">
@@ -118,9 +93,19 @@ export default function Projects() {
             key={project.title}
             className="bg-neutral-100 dark:bg-neutral-800 p-10 rounded-2xl shadow flex flex-col gap-6 transition-colors duration-300 text-left"
           >
-            <h3 className="text-2xl font-semibold text-purple-700 dark:text-purple-400 font-mono">
-              {project.title}
-            </h3>
+            <div className="flex justify-between items-center">
+              <h3 className="text-2xl font-semibold text-purple-700 dark:text-purple-400 font-mono">
+                {project.title}
+              </h3>
+              <a
+                href={project.source}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2 rounded-full border border-purple-500 text-purple-600 dark:border-cyan-300 dark:text-cyan-200 font-mono font-medium hover:bg-purple-600 hover:text-white dark:hover:bg-cyan-600 dark:hover:text-white transition shadow"
+              >
+                Source Code
+              </a>
+            </div>
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
                 <span
@@ -135,65 +120,9 @@ export default function Projects() {
               {project.description}
             </p>
 
-            <div className="mt-2">
-              <span className="font-semibold text-purple-700 dark:text-purple-400">Integration With Client Services:</span>
-              <ul className="list-disc ml-6 mt-1 text-neutral-700 dark:text-neutral-100 font-mono">
-                {project.integration.map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="mt-2">
-              <span className="font-semibold text-purple-700 dark:text-purple-400">Business Value:</span>
-              <ul className="list-disc ml-6 mt-1 text-neutral-700 dark:text-neutral-100 font-mono">
-                {project.businessValue.map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
             <div className="flex gap-4 mt-3">
-              <button
-                onClick={() => {
-                  setOpenDemos((prev) =>
-                    prev.map((open, idx) => (idx === i ? !open : open))
-                  );
-                }}
-                className="px-5 py-2 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 text-white font-mono font-medium hover:from-cyan-500 hover:to-pink-500 transition shadow"
-              >
-                {
-                  openDemos[i]
-                    ? (project.title === "Resume Q&A Chatbot" ? "Hide Chat" : "Hide Demo")
-                    : (project.title === "Resume Q&A Chatbot" ? "Start Chat" : "Live Demo")
-                }
-              </button>
-              <a
-                href={project.source}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 rounded-full border border-purple-500 text-purple-600 dark:border-cyan-300 dark:text-cyan-200 font-mono font-medium hover:bg-purple-600 hover:text-white dark:hover:bg-cyan-600 dark:hover:text-white transition shadow"
-              >
-                Source Code
-              </a>
+              <project.demo />
             </div>
-            {/* Slide Down Demo Fields */}
-            <AnimatePresence>
-              {openDemos[i] && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0, y: -30 }}
-                  animate={{ height: "auto", opacity: 1, y: 0 }}
-                  exit={{ height: 0, opacity: 0, y: -30 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className="mt-4"
-                >
-                  {project.title === "Resume Q&A Chatbot" ? (
-                    <ResumeChatBotDemo />
-                  ) : (
-                    <WafDemo />
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
         ))}
       </div>

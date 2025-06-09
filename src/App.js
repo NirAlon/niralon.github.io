@@ -44,6 +44,12 @@ const PROFILE_IMAGES = {
 function App() {
   const [active, setActive] = useState("home");
 
+  if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+  }
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
   useEffect(() => {
     Events.scrollEvent.register("begin", function () { });
     Events.scrollEvent.register("end", function () { });
@@ -85,129 +91,226 @@ function App() {
   const profilePhoto = PROFILE_IMAGES[active] || "/prof1.jpg";
 
   return (
-    <div className="flex min-h-screen font-sans bg-neutral-100 dark:bg-neutral-900 transition-colors duration-300">
-      {/* Sidebar Navigation */}
-      <nav className="
+    <div className="relative min-h-screen">
+      <div className="flex min-h-screen font-sans bg-neutral-100 dark:bg-neutral-900 transition-colors duration-300">
+        {/* Sidebar Navigation */}
+        {/* Mobile Bottom Nav Bar */}
+        <div className="fixed md:hidden top-0 left-0 w-full bg-neutral-100 dark:bg-neutral-900 border-t dark:border-neutral-700 flex justify-around py-2 z-40">
+          {SECTIONS.map(({ id, label }) => (
+            <ScrollLink
+              key={id}
+              to={id}
+              smooth={true}
+              duration={500}
+              offset={-24}
+              className={`
+        cursor-pointer px-3 py-2 rounded-lg font-mono text-xs transition
+        ${active === id
+                  ? "bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-cyan-200 shadow"
+                  : "text-neutral-900 dark:text-cyan-200 hover:bg-neutral-200 dark:hover:bg-neutral-800"}
+      `}
+            >
+              {label}
+            </ScrollLink>
+          ))}
+          {/* Show contact/download buttons only on Contact section */}
+          {active === "contact" && (
+            <div className="flex gap-1 ml-2">
+              <a
+                href="mailto:niralon99@gmail.com"
+                className="p-2 rounded-full border border-blue-400 text-blue-700 hover:bg-blue-700 hover:text-white transition"
+                aria-label="Email"
+                title="Email"
+              >
+                <Mail className="w-4 h-4" />
+              </a>
+              <a
+                href="https://github.com/NirAlon"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full border border-purple-500 text-purple-700 hover:bg-purple-700 hover:text-white transition"
+                aria-label="GitHub"
+                title="GitHub"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/niralonse"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full border border-pink-400 text-pink-700 hover:bg-pink-700 hover:text-white transition"
+                aria-label="LinkedIn"
+                title="LinkedIn"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
+              <a
+                href="/resume.pdf"
+                download
+                className="p-2 rounded-full border border-green-400 text-green-700 hover:bg-green-700 hover:text-white transition font-mono text-xs"
+                aria-label="Download CV (PDF)"
+                title="Download CV (PDF)"
+              >
+                PDF
+              </a>
+              <a
+                href="/resume.docx"
+                download
+                className="p-2 rounded-full border border-yellow-400 text-yellow-700 hover:bg-yellow-700 hover:text-white transition font-mono text-xs"
+                aria-label="Download CV (DOCX)"
+                title="Download CV (DOCX)"
+              >
+                DOCX
+              </a>
+            </div>
+          )}
+        </div>
+
+        <nav className="
   hidden md:flex flex-col gap-4 py-12 px-8 w-72
   bg-gradient-to-b from-neutral-100 to-neutral-300
   dark:from-neutral-900 dark:to-neutral-800
   shadow-lg fixed h-full z-10 items-center
   transition-colors duration-300
 ">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={profilePhoto}
-            src={profilePhoto}
-            alt="Nir Alon"
-            className="rounded-full shadow-lg mb-4 w-32 h-32 object-cover"
-            initial={{
-              opacity: 0,
-              y: scrollDirection === "down" ? 40 : -40,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              y: scrollDirection === "down" ? -40 : 40,
-            }}
-            transition={{ duration: 0.5 }}
-          />
-        </AnimatePresence>
-        <div className="mb-8 text-center">
-          <div className="font-bold text-purple-700 dark:text-purple-400 text-2xl font-mono">Nir Alon</div>
-          <div className="text-neutral-500 dark:text-neutral-400 text-base font-mono">Softwar Engineer</div>
-          <div className="text-neutral-400 dark:text-neutral-500 text-sm font-mono flex items-center justify-center mt-2">
-            <svg className="w-4 h-4 mr-1 inline-block" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 2a6 6 0 016 6c0 4-6 10-6 10S4 12 4 8a6 6 0 016-6zm0 8a2 2 0 110-4 2 2 0 010 4z" />
-            </svg>
-            United States
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={profilePhoto}
+              src={profilePhoto}
+              alt="Nir Alon"
+              className="rounded-full shadow-lg mb-4 w-32 h-32 object-cover"
+              initial={{
+                opacity: 0,
+                y: scrollDirection === "down" ? 40 : -40,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: scrollDirection === "down" ? -40 : 40,
+              }}
+              transition={{ duration: 0.5 }}
+            />
+          </AnimatePresence>
+          <div className="mb-8 text-center">
+            <div className="font-bold text-purple-700 dark:text-purple-400 text-2xl font-mono">Nir Alon</div>
+            <div className="text-neutral-500 dark:text-neutral-400 text-base font-mono">Software Engineer</div>
+            <div className="text-neutral-400 dark:text-neutral-500 text-sm font-mono flex items-center justify-center mt-2">
+              <svg className="w-4 h-4 mr-1 inline-block" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2a6 6 0 016 6c0 4-6 10-6 10S4 12 4 8a6 6 0 016-6zm0 8a2 2 0 110-4 2 2 0 010 4z" />
+              </svg>
+              United States
+            </div>
           </div>
-        </div>
-        {SECTIONS.map(({ id, label }) => (
-          <ScrollLink
-            key={id}
-            to={id}
-            smooth={true}
-            duration={500}
-            offset={-24}
-            className={`
+          {SECTIONS.map(({ id, label }) => (
+            <ScrollLink
+              key={id}
+              to={id}
+              smooth={true}
+              duration={500}
+              offset={-24}
+              className={`
         cursor-pointer px-4 py-2 rounded-lg font-medium font-mono transition
         ${active === id
-                ? "bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-cyan-200 shadow"
-                : "text-neutral-900 dark:text-cyan-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"}
+                  ? "bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-cyan-200 shadow"
+                  : "text-neutral-900 dark:text-cyan-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"}
       `}
-          >
-            {label}
-          </ScrollLink>
-        ))}
-        <AnimatePresence>
-          {active === "contact" && (
-            <motion.div
-              key="contact-buttons"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="flex gap-2 mt-4"
             >
-              <a
-                href="mailto:niralon99@gmail.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full border border-blue-400 dark:border-cyan-300 text-blue-700 dark:text-cyan-200 hover:bg-blue-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
-                aria-label="Email"
-                title="Email"
+              {label}
+            </ScrollLink>
+          ))}
+
+          <AnimatePresence>
+            {active === "contact" && (
+              <motion.div
+                key="contact-buttons"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="flex gap-2 mt-4"
               >
-                <Mail className="w-5 h-5" />
-              </a>
-              <a
-                href="https://github.com/NirAlon"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full border border-purple-500 dark:border-cyan-300 text-purple-700 dark:text-cyan-200 hover:bg-purple-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
-                aria-label="GitHub"
-                title="GitHub"
-              >
-                <Github />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/niralonse"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full border border-pink-400 dark:border-cyan-300 text-pink-700 dark:text-cyan-200 hover:bg-pink-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
-                aria-label="LinkedIn"
-                title="LinkedIn"
-              >
-                <Linkedin />
-              </a>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <a
+                  href="mailto:niralon99@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full border border-blue-400 dark:border-cyan-300 text-blue-700 dark:text-cyan-200 hover:bg-blue-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
+                  aria-label="Email"
+                  title="Email"
+                >
+                  <Mail className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://github.com/NirAlon"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full border border-purple-500 dark:border-cyan-300 text-purple-700 dark:text-cyan-200 hover:bg-purple-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
+                  aria-label="GitHub"
+                  title="GitHub"
+                >
+                  <Github />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/niralonse"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full border border-pink-400 dark:border-cyan-300 text-pink-700 dark:text-cyan-200 hover:bg-pink-700 hover:text-white dark:hover:bg-cyan-700 dark:hover:text-white transition"
+                  aria-label="LinkedIn"
+                  title="LinkedIn"
+                >
+                  <Linkedin />
+                </a>
+                <a
+                  href="/resume.pdf"
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full border border-green-400 dark:border-lime-400 text-green-700 dark:text-lime-200 hover:bg-green-700 hover:text-white dark:hover:bg-lime-700 dark:hover:text-white transition font-mono text-sm flex items-center gap-1"
+                  aria-label="Download CV (PDF)"
+                  title="Download CV (PDF)"
+                >
+                  <span className="font-bold">PDF</span>
+                </a>
+                <a
+                  href="/resume.docx"
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full border border-yellow-400 dark:border-yellow-300 text-yellow-700 dark:text-yellow-200 hover:bg-yellow-700 hover:text-white dark:hover:bg-yellow-700 dark:hover:text-white transition font-mono text-sm flex items-center gap-1"
+                  aria-label="Download CV (DOCX)"
+                  title="Download CV (DOCX)"
+                >
+                  <span className="font-bold">DOCX</span>
+                </a>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-      </nav>
+        </nav>
 
-      {/* Page Content */}
-      <div className="flex-1 flex flex-col items-center ml-0 md:ml-72 pt-8 md:pt-0">
-        <Element name="home" id="home" className="w-full max-w-3xl">
-          <AnimatedSection id="home">
-            <Home />
-          </AnimatedSection>
-        </Element>
+        {/* Page Content */}
+        <div className="flex-1 flex flex-col items-center ml-0 md:ml-72 pt-8 md:pt-0">
+          <Element name="home" id="home" className="w-full max-w-3xl">
+            <AnimatedSection id="home">
+              <Home />
+            </AnimatedSection>
+          </Element>
 
-        <Element name="projects" id="projects" className="w-full max-w-3xl">
-          <AnimatedSection id="projects">
-            <Projects />
-          </AnimatedSection>
-        </Element>
+          <Element name="projects" id="projects" className="w-full max-w-3xl">
+            <AnimatedSection id="projects">
+              <Projects />
+            </AnimatedSection>
+          </Element>
 
 
-        <Element name="contact" id="contact" className="w-full max-w-3xl">
-          <AnimatedSection id="contact">
-            <Contact />
-          </AnimatedSection>
-        </Element>
+          <Element name="contact" id="contact" className="w-full max-w-3xl">
+            <AnimatedSection id="contact">
+              <Contact />
+            </AnimatedSection>
+          </Element>
+        </div>
       </div>
     </div>
   );

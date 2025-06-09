@@ -8,12 +8,12 @@ const THRESHOLD_SQL = 0.978;
 
 export default function WafDemo() {
     // XSS state
-    const [xssInput, setXssInput] = useState("");
+    const [xssInput, setXssInput] = useState("<script>alert('XSS')</script>");
     const [xssStatus, setXssStatus] = useState(""); // "attack" | "safe" | ""
     const [xssLoading, setXssLoading] = useState(false);
 
     // SQLi state
-    const [sqliInput, setSqliInput] = useState("");
+    const [sqliInput, setSqliInput] = useState("SELECT * FROM users WHERE id=1 OR 1=1");
     const [sqliStatus, setSqliStatus] = useState("");
     const [sqliLoading, setSqliLoading] = useState(false);
 
@@ -96,7 +96,7 @@ export default function WafDemo() {
     const glowClass = "ring-2 ring-green-400 shadow-green-400/50";
 
     return (
-        <div className="w-full max-w-lg mt-8 bg-neutral-50 dark:bg-neutral-800 rounded-2xl p-2 shadow flex flex-col gap-8">
+        <div className="w-full max-w-lg mx-auto bg-neutral-50 dark:bg-neutral-900 rounded-2xl shadow p-6 flex flex-col gap-4">
 
             {/* XSS Section */}
             <form onSubmit={handleTestXSS} className="flex flex-col gap-2">
@@ -138,7 +138,7 @@ export default function WafDemo() {
                             xssStatus === "safe" && glowClass + " border-2 border-green-400 text-green-700"
                         )}
                         disabled={xssLoading}
-                        placeholder="Enter XSS payload"
+                        placeholder="<script>alert('XSS')</script>"
                     />
                     <button
                         type="submit"
@@ -146,7 +146,7 @@ export default function WafDemo() {
            hover:from-neutral-400 hover:to-neutral-700"
                         disabled={xssLoading}
                     >
-                        {xssLoading ? "Hacking..." : "Inject JS"}
+                        {xssLoading ? "Hacking..." : "Inject XSS"}
                     </button>
                 </div>
                 {xssStatus === "attack" && (
@@ -234,7 +234,7 @@ export default function WafDemo() {
                         Error: Could not contact server
                     </div>
                 )}
-                
+
             </form>
         </div>
     );
