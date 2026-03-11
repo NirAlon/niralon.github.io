@@ -14,6 +14,7 @@ function AnimatedSection({ id, children }) {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
+    <div className="overflow-hidden">
     <motion.section
       ref={ref}
       id={id}
@@ -24,6 +25,7 @@ function AnimatedSection({ id, children }) {
     >
       {children}
     </motion.section>
+    </div>
   );
 }
 
@@ -92,7 +94,7 @@ function App() {
 
   return (
     <div className="relative min-h-screen">
-      <div className="flex min-h-screen font-sans bg-neutral-100 dark:bg-neutral-900 transition-colors duration-300">
+      <div className="w-full overflow-x-hidden font-sans bg-neutral-100 dark:bg-neutral-900 transition-colors duration-300">
         {/* Sidebar Navigation */}
         {/* Mobile Bottom Nav Bar */}
         <div className="fixed md:hidden top-0 left-0 w-full bg-neutral-100 dark:bg-neutral-900 border-t dark:border-neutral-700 flex justify-around py-2 z-40">

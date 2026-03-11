@@ -2,6 +2,7 @@ import ComputerIcon from "./ComputerIcon";
 
 import WafDemo from "./WafDemo";
 import ResumeChatBotDemo from "./ResumeChatBotDemo";
+import appsecDemo from "./appsecDemo"
 
 const TAG_COLORS = {
   "Machine Learning": "bg-purple-800 text-purple-200",
@@ -25,7 +26,14 @@ const TAG_COLORS = {
   "Chatbot": "bg-purple-800 text-purple-200",
   "NLP": "bg-purple-800 text-purple-200",
   "OpenAI": "bg-purple-800 text-purple-200",
-  "LangChain": "bg-yellow-800 text-yellow-200"
+  "LangChain": "bg-yellow-800 text-yellow-200",
+  "GitHub Action": "bg-yellow-800 text-yellow-200",
+  "CI/CD": "bg-cyan-900 text-cyan-200",
+  "SAST": "bg-purple-800 text-purple-200",
+  "IaC": "bg-purple-800 text-purple-200",
+  "SCA": "bg-purple-800 text-purple-200",
+  "CyberSecurity": "bg-cyan-900 text-cyan-200",
+  "AppSec": "bg-cyan-900 text-cyan-200",
 };
 
 const projects = [
@@ -54,6 +62,23 @@ const projects = [
       "API"
     ],
     demo: WafDemo
+  },
+    {
+    title: "AppSec Scanner Github Action",
+    description:
+      "A custom GitHub Action designed to automate application security checks within CI/CD pipelines. This composite action integrates multiple tools for comprehensive static analysis and infrastructure security scanning.",
+    live: "/",
+    source: "https://github.com/marketplace/actions/appsec-scanner",
+    tags: [
+      "GitHub Action",
+      "CI/CD",
+      "SAST",
+      "IaC",
+      "SCA",
+      "CyberSecurity",
+      "AppSec",
+    ],
+    demo: appsecDemo
   },
   {
     title: "Resume Q&A Chatbot",
