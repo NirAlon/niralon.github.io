@@ -27,7 +27,7 @@ const projectGroups = [
           "Validated the fork in a real consumer project instead of treating it as an isolated patch.",
           "Planned next steps include iteration limits, reducers, and parallel fan-out/fan-in execution for safer production workflows.",
         ],
-        link: "https://github.com/NirAlon/langgraphgo",
+        link: "https://github.com/tmc/langgraphgo/pull/13",
         linkLabel: "Source Code",
         tags: ["Open Source", "LangGraph", "Go", "API"],
       },
