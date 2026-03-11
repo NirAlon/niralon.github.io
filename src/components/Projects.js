@@ -1,9 +1,3 @@
-import ComputerIcon from "./ComputerIcon";
-
-import WafDemo from "./WafDemo";
-import ResumeChatBotDemo from "./ResumeChatBotDemo";
-import appsecDemo from "./appsecDemo"
-
 const TAG_COLORS = {
   "Machine Learning": "bg-purple-800 text-purple-200",
   "TensorFlow Lite": "bg-purple-800 text-purple-200",
@@ -13,140 +7,125 @@ const TAG_COLORS = {
   "Python": "bg-yellow-800 text-yellow-200",
   "FastAPI": "bg-yellow-800 text-yellow-200",
   "gRPC": "bg-yellow-800 text-yellow-200",
-  "REST": "bg-yellow-800 text-yellow-200",
-  "Cloud": "bg-cyan-900 text-cyan-200",
-  "Microservices": "bg-cyan-900 text-cyan-200",
-  "Docker-Compose": "bg-cyan-900 text-cyan-200",
-  "Caddy": "bg-cyan-900 text-cyan-200",
-  "Pipelines": "bg-cyan-900 text-cyan-200",
-  "React": "bg-cyan-900 text-cyan-200",
+  "Go": "bg-yellow-800 text-yellow-200",
+  "LangGraph": "bg-purple-800 text-purple-200",
+  "Open Source": "bg-cyan-900 text-cyan-200",
   "API": "bg-cyan-900 text-cyan-200",
-  "GO": "bg-yellow-800 text-yellow-200",
-  "Gin&Gonic": "bg-cyan-900 text-cyan-200",
-  "Chatbot": "bg-purple-800 text-purple-200",
-  "NLP": "bg-purple-800 text-purple-200",
-  "OpenAI": "bg-purple-800 text-purple-200",
-  "LangChain": "bg-yellow-800 text-yellow-200",
-  "GitHub Action": "bg-yellow-800 text-yellow-200",
-  "CI/CD": "bg-cyan-900 text-cyan-200",
-  "SAST": "bg-purple-800 text-purple-200",
-  "IaC": "bg-purple-800 text-purple-200",
-  "SCA": "bg-purple-800 text-purple-200",
-  "CyberSecurity": "bg-cyan-900 text-cyan-200",
-  "AppSec": "bg-cyan-900 text-cyan-200",
 };
 
-const projects = [
+const projectGroups = [
   {
-    title: "Web Application Firewall (WAF)",
-    description:
-      "Designed and implemented a modular, machine learning-driven Web Application Firewall (WAF) to provide robust, automated protection against web application threats—including XSS and SQL injection—across client-facing services. The solution is architected as a containerized microservice, deployable via Docker Compose, with an API-first approach for seamless integration into diverse client infrastructures.",
-    live: "/",
-    source: "https://github.com/NirAlon/WafProject",
-    tags: [
-      "Machine Learning",
-      "TensorFlow Lite",
-      "Cybersecurity",
-      "XSS",
-      "SQLi",
-      "Python",
-      "FastAPI",
-      "gRPC",
-      "REST",
-      "Cloud",
-      "Microservices",
-      "Docker-Compose",
-      "Caddy",
-      "Pipelines",
-      "React",
-      "API"
+    title: "Open Source",
+    eyebrow: "Community Contribution",
+    items: [
+      {
+        title: "tmc/langgraphgo contribution",
+        summary:
+          "Extended langgraphgo with conditional edge support for state-based routing in graph execution.",
+        details: [
+          "Added the routing model, invalid-condition error handling, and test coverage for conditional graph execution.",
+          "Validated the fork in a real consumer project instead of treating it as an isolated patch.",
+          "Planned next steps include iteration limits, reducers, and parallel fan-out/fan-in execution for safer production workflows.",
+        ],
+        link: "https://github.com/NirAlon/langgraphgo",
+        linkLabel: "Source Code",
+        tags: ["Open Source", "LangGraph", "Go", "API"],
+      },
+      {
+        title: "Machine-Learning Web Application Firewall",
+        summary:
+          "A public security project that shows how I design API-first protection layers around ML-based detection for XSS and SQL injection.",
+        details: [
+          "Built a modular service around machine-learning threat detection instead of a one-off demo.",
+          "Used it to demonstrate practical security boundaries, deployable components, and integration into broader application infrastructure.",
+        ],
+        link: "https://github.com/NirAlon/WafProject",
+        linkLabel: "Source Code",
+        tags: ["Machine Learning", "TensorFlow Lite", "Cybersecurity", "XSS", "SQLi", "Python", "FastAPI", "gRPC", "API"],
+      },
     ],
-    demo: WafDemo
   },
-    {
-    title: "AppSec Scanner Github Action",
-    description:
-      "A custom GitHub Action designed to automate application security checks within CI/CD pipelines. This composite action integrates multiple tools for comprehensive static analysis and infrastructure security scanning.",
-    live: "/",
-    source: "https://github.com/marketplace/actions/appsec-scanner",
-    tags: [
-      "GitHub Action",
-      "CI/CD",
-      "SAST",
-      "IaC",
-      "SCA",
-      "CyberSecurity",
-      "AppSec",
-    ],
-    demo: appsecDemo
-  },
-  {
-    title: "Resume Q&A Chatbot",
-    description:
-      "Built a conversational AI assistant trained on my resume, work experience, and skills. The chatbot answers questions from recruiters and visitors about my background, key projects, and expertise. This interactive tool provides an engaging, modern way to learn about my professional profile—going beyond the limitations of a static CV.",
-    live: "/",
-    source: "https://github.com/NirAlon/ResumeChatBot",
-    tags: [
-      "React",
-      "GO",
-      "Gin&Gonic",
-      "Chatbot",
-      "NLP",
-      "OpenAI",
-      "LangChain",
-      "API"
-    ],
-    demo: ResumeChatBotDemo
-  }
 ];
 
+function TagList({ tags }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {tags.map((tag) => (
+        <span
+          key={tag}
+          className={`${TAG_COLORS[tag] || "bg-neutral-400 text-neutral-900"} px-3 py-1 rounded-full text-xs font-semibold font-mono`}
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+  );
+}
 
-
-export default function Projects() {
+function ProjectCard({ item }) {
+  const linkClasses = item.link
+    ? "rounded-full border border-purple-500 px-5 py-2 text-sm md:text-base text-purple-700 dark:text-cyan-300 font-mono hover:bg-purple-600 hover:text-white dark:hover:bg-cyan-600 dark:hover:text-white transition shadow-sm"
+    : "rounded-full border border-neutral-300 dark:border-neutral-700 px-5 py-2 text-sm md:text-base text-neutral-500 dark:text-neutral-400 font-mono";
 
   return (
-    <section className="flex flex-col items-center gap-4 py-32 min-h-[60vh]">
-      <div className="flex justify-center items-center gap-4 mb-12">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-neutral-900 dark:text-cyan-200 font-mono text-center">
-          Projects
-        </h1>
-        <ComputerIcon className="w-12 h-12 md:w-16 md:h-16" />
-      </div>
-      <div className="w-full max-w-3xl mx-auto rounded-2xl p-[2px] bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 shadow-xl">
-        {projects.map((project, i) => (
-          <div
-            key={project.title}
-            className="bg-neutral-100 dark:bg-neutral-800 p-10 rounded-2xl shadow flex flex-col gap-6 transition-colors duration-300 text-left"
+    <div className="rounded-2xl border border-neutral-300 dark:border-neutral-700 p-6 md:p-8 flex flex-col gap-5 text-left">
+      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+        <h3 className="text-2xl md:text-3xl font-semibold text-neutral-900 dark:text-neutral-100 font-mono">
+          {item.title}
+        </h3>
+        {item.link ? (
+          <a
+            href={item.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={linkClasses}
           >
-            <div className="flex justify-between items-center">
-              <h3 className="text-2xl font-semibold text-purple-700 dark:text-purple-400 font-mono">
-                {project.title}
-              </h3>
-              <a
-                href={project.source}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 rounded-full border border-purple-500 text-purple-600 dark:border-cyan-300 dark:text-cyan-200 font-mono font-medium hover:bg-purple-600 hover:text-white dark:hover:bg-cyan-600 dark:hover:text-white transition shadow"
-              >
-                Source Code
-              </a>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className={`${TAG_COLORS[tag] || "bg-neutral-400 text-neutral-900"} px-3 py-1 rounded-full text-xs font-semibold font-mono`}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <p className="text-neutral-700 dark:text-neutral-100 font-mono">
-              {project.description}
-            </p>
+            {item.linkLabel}
+          </a>
+        ) : (
+          <span className={linkClasses}>{item.linkLabel}</span>
+        )}
+      </div>
 
-            <div className="flex gap-4 mt-3">
-              <project.demo />
+      <p className="text-lg md:text-xl text-neutral-900 dark:text-neutral-100 font-mono leading-relaxed text-left">
+        {item.summary}
+      </p>
+
+      <div className="grid gap-3 text-left">
+        {item.details.map((detail) => (
+          <p
+            key={detail}
+            className="text-neutral-800 dark:text-neutral-100 font-mono leading-relaxed border-l-2 border-purple-500 pl-4"
+          >
+            {detail}
+          </p>
+        ))}
+      </div>
+
+      <TagList tags={item.tags} />
+    </div>
+  );
+}
+
+export default function Projects() {
+  return (
+    <section className="portfolio-panel flex flex-col items-center gap-8 justify-center">
+      <div className="w-full max-w-5xl mx-auto flex flex-col gap-6">
+        {projectGroups.map((group) => (
+          <div key={group.title} className="flex flex-col gap-5">
+            <div className="flex flex-wrap items-end gap-3 text-left">
+              <h2 className="text-4xl md:text-5xl font-extrabold text-neutral-900 dark:text-cyan-200 font-mono leading-none">
+                {group.title}
+              </h2>
+              <p className="pb-1 text-sm uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400 font-mono">
+                {group.eyebrow}
+              </p>
+            </div>
+
+            <div className="grid gap-5">
+              {group.items.map((item) => (
+                <ProjectCard key={item.title} item={item} />
+              ))}
             </div>
           </div>
         ))}

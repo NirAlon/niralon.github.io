@@ -5,11 +5,61 @@
 html, body {
   margin: 0;
   padding: 0;
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  --frame-angle: 135deg;
+  --frame-shift-x: 20%;
+  --frame-shift-y: 80%;
 }
 
 section {
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: visible;
+  height: 100%;
+}
+
+#root {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.portfolio-scroll {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.content-frame {
+  width: calc(100% - 0.5rem);
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.portfolio-panel {
+  min-height: 100%;
+  height: 100%;
+  padding-top: clamp(1.5rem, 4vh, 3rem);
+  padding-bottom: clamp(1.5rem, 4vh, 3rem);
+}
+
+.gradient-frame {
+  background-image: linear-gradient(
+    var(--frame-angle),
+    rgb(236 72 153) 0%,
+    rgb(168 85 247) 45%,
+    rgb(6 182 212) 100%
+  );
+  background-position: var(--frame-shift-x) var(--frame-shift-y);
+  background-size: 180% 180%;
+  transition: background-position 180ms linear, background-image 180ms linear;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 24px 48px rgba(0, 0, 0, 0.08);
+}
+
+@media (min-width: 768px) {
+  .content-frame {
+    width: calc(100% - 1rem);
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
 }
